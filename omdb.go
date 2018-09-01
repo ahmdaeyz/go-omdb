@@ -32,7 +32,7 @@ type SingleResultResponse struct {
 	Error      string `json:"Error"`
 }
 
-func SearchByTitle(searchTerm string) (SingleResultResponse, error) {
+func SearchByTitle(searchTerm, apiKey string) (SingleResultResponse, error) {
 	req, err := http.NewRequest("GET", baseUrl, nil)
 	if err != nil {
 		return SingleResultResponse{}, err
@@ -40,6 +40,7 @@ func SearchByTitle(searchTerm string) (SingleResultResponse, error) {
 
 	query := req.URL.Query()
 	query.Add("t", searchTerm)
+	query.Add("apikey", apiKey)
 	req.URL.RawQuery = query.Encode()
 
 	client := http.Client{}
